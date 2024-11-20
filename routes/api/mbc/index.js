@@ -19,7 +19,7 @@ router.get("/register", async (req,res) => {
         let id = await registerGame(req.query.frames,req.query.pins,req.query.rolls,req.query.test);
         
         //Create New Game Object
-        //game = new Game(id);
+        game = new Game(id);
 
         //Cache New Game Object
         mCache.put(id, JSON.stringify(game));
@@ -64,7 +64,7 @@ router.get("/roll", async (req, res) => {
                 bullPins = parseInt(myPins);
         }
         
-        /*
+        
         if (myPins == "X") {
             game.addRoll(10);
         }
@@ -78,7 +78,7 @@ router.get("/roll", async (req, res) => {
             game.addRoll(parseInt(myPins));
         }
         let pins = game.getScore();
-        */
+        
 
         totalInframe = totalInframe + bullPins;
         if(ballInFrame>=2){

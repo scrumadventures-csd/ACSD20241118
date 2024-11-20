@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useState} from 'react';
 
 import logo from './logo.svg';
+import bowling from '../src/bowling.png';
 
 // Configuration parameters
 let myServerRoot = "http://localhost:5000";
@@ -53,9 +54,10 @@ const rollOneBall = e => {
 
   return (
     <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
+      {/*<img src={logo} className="App-logo" alt="logo" />*/}
+      <img src={bowling} className="App-logo" alt="bowling" />
       <p>
-          Bowling App
+          My Bowling Center
       </p>
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
 

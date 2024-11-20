@@ -2,14 +2,32 @@ const app = require("../server");
 const supertest = require("supertest");
 const { getRoll } = require("../functions/roll");
 const { registerGame } = require("../functions/register");
+const {Game, Frame, Roll} = require("../game/game");
 
 //rolling 2 then a 4
-test("getRoll(return one ball - value=2)", async () => {
+test("getRoll(return one frame - value=24)", async () => {
 
-    let id     = await registerGame(10,10,2,"24");
-    let myPins = await getRoll(id);
+    let id     = '';
+    let myPins = 0;
+    let frameTotal = 0;
 
-    console.log("My Pins = " + myPins);
+    var game = null;
+ 
+    id = await registerGame(10,10,2,"24");
+    //Create New Game Object
+    game = new Game(id);
 
-    expect(myPins == "6").toBe(true);
+    myPins = await getRoll(id);
+    game.addRoll(myPins);
+    console.log("oneFrame.test Roll1 = " + myPins);
+
+    myPins = await getRoll(id);
+    game.addRoll(myPins);
+    console.log("oneFrame.test Roll2 = " + myPins);
+
+    frameTotal = game.getScore();
+
+    console.log("oneFrame.test Frame Total = " + frameTotal);
+
+    expect(frameTotal == "6").toBe(true);
 });
