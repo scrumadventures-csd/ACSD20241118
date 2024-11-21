@@ -44,6 +44,7 @@ function App() {
         setball2(0);
         setTotalInframe(0);
         setPins(0);
+        setFrameNumber(0);
     })
 }
 

@@ -55,12 +55,13 @@ router.get("/roll", async (req, res) => {
         console.log("totalInframe =>"+totalInframe);
         console.log("frameNumber=>"+frameNumber);
 
-        if ( ball1 == 0)
+        if ( ballInFrame <= 1)
         {
             console.log("Ball1 pins dropped:" + myPins);
             ball1 = parseInt(myPins);
+            ball2 = 0;
         }
-        else if ( (ball2 == 0) && (ball1 != 0) )
+        else if ( ballInFrame >= 2 )
         {
             console.log("Ball2 pins dropped:" + myPins);
             ball2 = parseInt(myPins);
