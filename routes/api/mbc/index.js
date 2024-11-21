@@ -100,16 +100,21 @@ router.get("/roll", async (req, res) => {
         
 
         totalInframe = totalInframe + bullPins;
-        if(ballInFrame>=2){
+        if(ballInFrame>=2)
+        {
             mCache.put("totalInFrame",0);
             mCache.put("frameNumber",frameNumber+1);
             mCache.put("ballInFrame",0);
-        }else{
+        }
+        else
+        {
             mCache.put("totalInFrame",totalInframe);
             mCache.put("ballInFrame",ballInFrame);
-            mCache.put("ball1",ball1);
-            mCache.put("ball2",ball2);
         }
+
+        //Display balls rolled 
+        mCache.put("ball1",ball1);
+        mCache.put("ball2",ball2);
 
         //res.json({ pins,frameNumber,ballInFrame,bullPins,myPins,totalInframe});
         res.json({ball1,ball2,pins,frameNumber,ballInFrame,bullPins,myPins,totalInframe});

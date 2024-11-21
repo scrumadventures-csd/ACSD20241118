@@ -11,7 +11,7 @@ let myLocalMode = false;
 let myClassDate = "20241118";
 let myServerRoot = (myLocalMode)
     ? "http://localhost:5000"
-    : `https://acsd${myClassDate}-06363e0abe68.herokuapp.com`;
+    : `https://acsd${myClassDate}-b95715324c92.herokuapp.com/`;
 
 
 function App() {
@@ -38,8 +38,12 @@ function App() {
     axios.get(myRegisterUrl).then(response => {
         //console.log(response.data);
         //alert (response.data);
-        setGameId(response.data.id)
-        setGameStarted(true)
+        setGameId(response.data.id);
+        setGameStarted(true);
+        setball1(0);
+        setball2(0);
+        setTotalInframe(0);
+        setPins(0);
     })
 }
 
