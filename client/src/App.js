@@ -6,7 +6,13 @@ import logo from './logo.svg';
 import bowling from '../src/bowling.png';
 
 // Configuration parameters
-let myServerRoot = "http://localhost:5000";
+//let myServerRoot = "http://localhost:5000";
+let myLocalMode = false;
+let myClassDate = "20241118";
+let myServerRoot = (myLocalMode)
+    ? "http://localhost:5000"
+    : `https://acsd${myClassDate}-06363e0abe68.herokuapp.com`;
+
 
 function App() {
   const [data, setData] = useState(null); // State to store API response
@@ -22,14 +28,16 @@ function App() {
   const [myPins, setMyPins] = useState(0);
   const [ballNumber, setBallNumber] = useState(0);
   const [totalInframe, setTotalInframe] = useState(0);
+  const [ball1, setball1] = useState(0);
+  const [ball2, setball2] = useState(0);
 
   const startGame = e => {
     var myRegisterUrl = `${myServerRoot}/api/mbc/register`;
-    alert (myRegisterUrl);
+    //alert (myRegisterUrl);
 
     axios.get(myRegisterUrl).then(response => {
         //console.log(response.data);
-        alert (response.data);
+        //alert (response.data);
         setGameId(response.data.id)
         setGameStarted(true)
     })
@@ -37,7 +45,7 @@ function App() {
 
 const rollOneBall = e => {
     var myRollUrl = `${myServerRoot}/api/mbc/roll?id=${gameId}`;
-    alert (myRollUrl);
+    //alert (myRollUrl);
 
     axios.get(myRollUrl).then(response => {
         console.log("[App.js Roll Response:] " + response.data)
@@ -49,6 +57,8 @@ const rollOneBall = e => {
         setBallNumber(response.data.ballInFrame)
         setMyPins(response.data.myPins)
         setTotalInframe(response.data.totalInframe)
+        setball1(response.data.ball1)
+        setball2(response.data.ball2)
     })
 }
 
@@ -61,7 +71,8 @@ const rollOneBall = e => {
       </p>
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
 
-        {!gameStarted && <>
+        {!gameStarted && 
+          <>
             <input size={50} onChange={(e) => setName(e.target.value)}
                     type="text"
                     placeholder="Name your game"
@@ -69,44 +80,50 @@ const rollOneBall = e => {
             />
             <>&nbsp;</>
             <button onClick={startGame}>Go!</button>
-        </>
+          </>
         }
 
-        {gameStarted && <p>Welcome!</p>}
-        {gameStarted && <p>Your game, {name}, has unique id which  {gameId}</p>}
+        {gameStarted && 
+          <>
+            <button onClick={startGame}>Start New Game</button>
+          </>
+        }
+
+        {gameStarted && <p>Welcome! to game: {name}</p>}
+        {/*gameStarted && <p>Your game, {name}, has unique id which  {gameId}</p>*/}
         {gameStarted &&
             <>
                 <button onClick={rollOneBall}>Roll Ball</button>
                 {ballRolled && <p>Frame no:  {frameNumber}</p>}
                 
                 {ballRolled && 
-                <table>
-                <tr>
-                    <th></th>
-                    <th>Frame 1</th>
-                </tr>
-                <tr>
-                    <td>Ball1</td>
-                    <td>{myPins}</td>
-                </tr>
-                <tr>
-                    <td>Ball2</td>
-                    <td> </td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{totalInframe}</td>
-                </tr>
-                <tr>
-                    <td>Game</td>
-                    <td>{pins}</td>
-                </tr>
-                </table>
+                  <table>
+                    <tr>
+                        <th></th>
+                        <th>Frame {frameNumber}</th>
+                    </tr>
+                    <tr>
+                        <td>Ball1</td>
+                        <td>{ball1}</td>
+                    </tr>
+                    <tr>
+                        <td>Ball2</td>
+                        <td>{ball2}</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>{totalInframe}</td>
+                    </tr>
+                    <tr>
+                        <td>Game</td>
+                        <td>{pins}</td>
+                    </tr>
+                  </table>
                 }
                 {ballRolled && <p>Ball no:  {ballNumber}</p>}
-                {ballRolled && <p>You got {myPins} That's a total of {ballPins} pins ! </p>}
-                {ballRolled && <p>Your total in frame is {totalInframe}</p>}
-                {ballRolled && <p>Your total Score are {pins}</p>}
+                {ballRolled && <p>You got {myPins}; That's a total of {ballPins} pins ! </p>}
+                {ballRolled && <p>Your total in frame is: {totalInframe}</p>}
+                {ballRolled && <p>Your total score is: {pins}</p>}
 
             </>
         }

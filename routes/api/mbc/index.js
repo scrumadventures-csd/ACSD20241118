@@ -26,6 +26,8 @@ router.get("/register", async (req,res) => {
         mCache.put("ballInFrame", 0);
         mCache.put("frameNumber", 1);
         mCache.put("totalInFrame", 0);
+        mCache.put("ball1", 0);
+        mCache.put("ball2", 0);
 
         res.json({ id });
     } 
@@ -44,12 +46,29 @@ router.get("/roll", async (req, res) => {
         let ballInFrame = mCache.get("ballInFrame");
         let totalInframe = mCache.get("totalInFrame");
         let frameNumber = mCache.get("frameNumber");
+        let ball1 = mCache.get("ball1");
+        let ball2 = mCache.get("ball2");
         ballInFrame = ballInFrame +1;
 
         let myPins = await getRoll(req.query.id);
         console.log("ballInFrame =>"+ballInFrame);
         console.log("totalInframe =>"+totalInframe);
         console.log("frameNumber=>"+frameNumber);
+
+        if ( ball1 == 0)
+        {
+            console.log("Ball1 pins dropped:" + myPins);
+            ball1 = parseInt(myPins);
+        }
+        else if ( (ball2 == 0) && (ball1 != 0) )
+        {
+            console.log("Ball2 pins dropped:" + myPins);
+            ball2 = parseInt(myPins);
+        }
+        else
+        {
+            console.log("Pins dropped:" + myPins);
+        }
 
         var bullPins="";
         switch(myPins) {
@@ -88,10 +107,12 @@ router.get("/roll", async (req, res) => {
         }else{
             mCache.put("totalInFrame",totalInframe);
             mCache.put("ballInFrame",ballInFrame);
+            mCache.put("ball1",ball1);
+            mCache.put("ball2",ball2);
         }
 
         //res.json({ pins,frameNumber,ballInFrame,bullPins,myPins,totalInframe});
-        res.json({ frameNumber,ballInFrame,bullPins,myPins,totalInframe});
+        res.json({ball1,ball2,pins,frameNumber,ballInFrame,bullPins,myPins,totalInframe});
 
     } 
     catch (err) {
