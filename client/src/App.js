@@ -2,7 +2,7 @@ import './App.css';
 import axios from 'axios';
 import {useState} from 'react';
 
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import bowling from '../src/bowling.png';
 
 // Configuration parameters
@@ -15,9 +15,6 @@ let myServerRoot = (myLocalMode)
 
 
 function App() {
-  const [data, setData] = useState(null); // State to store API response
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const [error, setError] = useState(null); // State for error handling
   const [gameId, setGameId] = useState();
   const [gameStarted, setGameStarted] = useState(false);
   const [pins, setPins] = useState();
